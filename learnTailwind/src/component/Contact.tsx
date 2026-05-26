@@ -31,7 +31,7 @@ function Contact() {
           <h2 className="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white">
             Let's work together
           </h2>
-          <p className="text-stone-500 dark:text-gray-400 max-w-xl mx-auto">
+          <p className="text-stone-500 dark:text-gray-400 text-center">
             Have a project in mind or want to chat? I'd love to hear from you.
             Send me a message and I'll get back to you as soon as possible.
           </p>

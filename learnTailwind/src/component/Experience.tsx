@@ -37,7 +37,7 @@ function Experience() {
           <h2 className="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white">
             Where I've worked
           </h2>
-          <p className="text-stone-500 dark:text-gray-400 max-w-xl mx-auto">
+          <p className="text-stone-500 dark:text-gray-400 text-center">
             My professional journey building products and leading teams across
             startups and enterprises.
           </p>

@@ -75,7 +75,7 @@ function Projects() {
           <h2 className="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white">
             Things I've built
           </h2>
-          <p className="text-stone-500 dark:text-gray-400 max-w-xl mx-auto">
+          <p className="text-stone-500 dark:text-gray-400 text-center">
             A selection of projects I'm proud of. Each one solved a real
             problem and taught me something new.
           </p>
