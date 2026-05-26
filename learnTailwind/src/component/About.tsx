@@ -1,39 +1,39 @@
 const skillGroups = [
   {
-    category: "Frontend",
+    category: "Languages",
     badge: "Core",
-    icon: "🖥️",
-    items: ["React", "TypeScript", "Next.js", "Tailwind CSS", "Vue.js"],
+    icon: "💻",
+    items: ["C#", "VB.NET", "JavaScript", "PHP", "Python"],
   },
   {
-    category: "Backend",
+    category: ".NET Stack",
     badge: "Core",
     icon: "⚙️",
-    items: ["Node.js", "Express", "Python", "REST API", "GraphQL"],
+    items: [".NET Framework", ".NET Core", "ASP.NET", "DevExpress"],
   },
   {
-    category: "Database",
+    category: "Web Frameworks",
+    badge: "Core",
+    icon: "🌐",
+    items: ["Node.js", "Next.js", "Django"],
+  },
+  {
+    category: "CMS Platforms",
+    badge: "Pro",
+    icon: "🖥️",
+    items: ["Sitecore", "Sitefinity", "Directus (VISOR)"],
+  },
+  {
+    category: "Databases",
     badge: "Core",
     icon: "🗄️",
-    items: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "Prisma"],
+    items: ["Oracle", "SQL Server", "PostgreSQL"],
   },
   {
-    category: "Cloud & DevOps",
+    category: "Cloud & Tools",
     badge: "Pro",
     icon: "☁️",
-    items: ["AWS", "Docker", "CI/CD", "Vercel", "Nginx"],
-  },
-  {
-    category: "Design & Tools",
-    badge: "Core",
-    icon: "🎨",
-    items: ["Figma", "Git", "VS Code", "Postman", "Jira"],
-  },
-  {
-    category: "Testing",
-    badge: "Pro",
-    icon: "🧪",
-    items: ["Jest", "Vitest", "Cypress", "RTL", "Playwright"],
+    items: ["AWS", "Git", "VS Code"],
   },
 ];
 
@@ -52,12 +52,11 @@ function About() {
             About Me
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white leading-tight">
-            Everything you need in a developer
+            Technologies I've worked with
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">
-            From pixel-perfect UIs to scalable APIs, I bring ideas to life
-            with clean code, thoughtful architecture, and a passion for great
-            user experiences.
+          <p className="text-gray-600 dark:text-gray-400 text-center text-lg">
+            From enterprise .NET applications to government CMS platforms — a broad range of
+            expertise refined over 13+ years of professional software development.
           </p>
         </div>
 

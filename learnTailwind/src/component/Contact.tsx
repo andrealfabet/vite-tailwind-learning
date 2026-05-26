@@ -2,20 +2,20 @@ const contactInfo = [
   {
     icon: "📧",
     label: "Email",
-    value: "andreaswenra@email.com",
-    href: "mailto:andreaswenra@email.com",
+    value: "andreaswenra@gmail.com",
+    href: "mailto:andreaswenra@gmail.com",
+  },
+  {
+    icon: "📞",
+    label: "Phone",
+    value: "+62 822 1627 8089",
+    href: "tel:+6282216278089",
   },
   {
     icon: "💼",
     label: "LinkedIn",
     value: "linkedin.com/in/andreaswenra",
     href: "https://linkedin.com/in/andreaswenra",
-  },
-  {
-    icon: "🐙",
-    label: "GitHub",
-    value: "github.com/andreaswenra",
-    href: "https://github.com/andreaswenra",
   },
 ];
 
@@ -65,7 +65,7 @@ function Contact() {
               <div className="flex items-center gap-3">
                 <span className="w-2.5 h-2.5 bg-teal-400 rounded-full animate-pulse" />
                 <span className="text-teal-400 font-medium text-sm">
-                  Currently available for freelance & full-time roles
+                  Open to new opportunities — based in Bandung, Indonesia
                 </span>
               </div>
             </div>

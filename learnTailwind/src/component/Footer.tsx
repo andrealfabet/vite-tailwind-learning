@@ -9,13 +9,12 @@ function Footer() {
           <div className="space-y-4">
             <div className="text-2xl font-bold text-teal-600 dark:text-teal-400">Andreas</div>
             <p className="text-stone-500 dark:text-gray-500 text-sm leading-relaxed max-w-xs">
-              Full Stack Developer building clean, performant, and
-              user-friendly web experiences.
+              Software Developer with 13+ years of experience delivering
+              enterprise web solutions across government, banking, and finance sectors.
             </p>
             <div className="flex gap-4 pt-2">
               {[
-                { label: "GitHub", href: "https://github.com" },
-                { label: "LinkedIn", href: "https://linkedin.com" },
+                { label: "LinkedIn", href: "https://linkedin.com/in/andreaswenra" },
               ].map((s) => (
                 <a
                   key={s.label}
@@ -52,9 +51,8 @@ function Footer() {
             <h4 className="text-stone-900 dark:text-white font-semibold mb-5">Connect</h4>
             <ul className="space-y-3">
               {[
-                { label: "GitHub", href: "https://github.com/andreaswenra" },
                 { label: "LinkedIn", href: "https://linkedin.com/in/andreaswenra" },
-                { label: "Email", href: "mailto:andreaswenra@email.com" },
+                { label: "Email", href: "mailto:andreaswenra@gmail.com" },
               ].map((item) => (
                 <li key={item.label}>
                   <a
@@ -73,7 +71,7 @@ function Footer() {
 
         {/* Bottom bar */}
           <div className="border-t border-stone-200 dark:border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-stone-400 dark:text-gray-600">
-          <span>© {year} Andreas. All rights reserved.</span>
+          <span>© {year} Andreas Wenra Alfa Septiaji. All rights reserved.</span>
           <span>Built with React · TypeScript · Tailwind CSS</span>
         </div>
       </div>

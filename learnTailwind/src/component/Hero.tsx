@@ -19,8 +19,7 @@ function Hero() {
           </h1>
 
           <p className="text-xl text-stone-600 dark:text-gray-400 leading-relaxed">
-            Full Stack Developer passionate about building beautiful,
-            performant web applications from design to deployment.
+            Software developer with 13+ years of experience building enterprise web applications and government digital platforms. Skilled in .NET ecosystems, CMS technologies, and modern web frameworks — driven by a passion for problem-solving and delivering reliable, high-impact software.
           </p>
 
           <div className="flex flex-wrap gap-4 pt-2">
@@ -41,9 +40,9 @@ function Hero() {
           {/* Quick stats */}
           <div className="flex gap-8 pt-4 border-t border-stone-200 dark:border-white/10">
             {[
-              { value: "3+", label: "Years Exp." },
-              { value: "20+", label: "Projects" },
-              { value: "10+", label: "Clients" },
+              { value: "13+", label: "Years Exp." },
+              { value: "15+", label: "Projects" },
+              { value: "5+", label: "Companies" },
             ].map((stat) => (
               <div key={stat.label}>
                 <div className="text-2xl font-bold text-teal-400">{stat.value}</div>

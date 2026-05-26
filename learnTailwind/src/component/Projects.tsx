@@ -1,66 +1,55 @@
 const projects = [
   {
-    badge: "Full Stack",
-    title: "E-Commerce Platform",
+    badge: "Government",
+    title: "Singapore Government Websites",
     description:
-      "Full-featured online store with cart, auth, payment integration via Stripe, and a real-time admin dashboard.",
-    tech: ["Next.js", "Node.js", "PostgreSQL", "Stripe"],
-    github: "https://github.com",
-    live: "#",
+      "Developed and maintained multiple Singapore Government digital platforms — YRSG, PSD Corp, PSD Careers, PSD Challenges, Tote Board, and PSC — using enterprise CMS technologies and modern web frameworks.",
+    tech: ["Next.js", "Sitecore", "Sitefinity", "C#", "SQL Server"],
   },
   {
-    badge: "Frontend",
-    title: "Design System Dashboard",
+    badge: "Migration",
+    title: "CMS Migration: Sitecore \u2192 Directus",
     description:
-      "Comprehensive design system manager with token management, component documentation, and team collaboration.",
-    tech: ["React", "TypeScript", "Tailwind CSS"],
-    github: "https://github.com",
-    live: "#",
+      "Led end-to-end migration of a Singapore Government website from Sitecore CMS to Directus Visor, rebuilding the frontend with Next.js and configuring cloud environments on AWS.",
+    tech: ["Next.js", "Directus", "Sitecore", "AWS"],
   },
   {
-    badge: "Full Stack",
-    title: "Task Management App",
+    badge: "Enterprise",
+    title: "IPROCURA \u2013 Procurement System",
     description:
-      "Kanban-style project management tool with drag-and-drop, real-time updates via WebSockets, and team roles.",
-    tech: ["React", "Socket.io", "MongoDB", "Express"],
-    github: "https://github.com",
-    live: "#",
+      "Built and maintained a procurement web application for PELINDO and Lintas Arta, featuring transaction management, approval workflows, and rich reporting with DevExpress.",
+    tech: [".NET Framework", "C#", "Oracle", "DevExpress", "ASP.NET"],
   },
   {
-    badge: "Open Source",
-    title: "React Component Library",
+    badge: "Finance",
+    title: "MYCOINS \u2013 Billing & Finance",
     description:
-      "Collection of accessible, customizable UI components with full TypeScript support and Storybook documentation.",
-    tech: ["React", "TypeScript", "Storybook"],
-    github: "https://github.com",
-    live: "#",
+      "Developed and maintained a billing and finance reporting web application for PT Telkom Indonesia, handling large-scale financial data and automated report generation.",
+    tech: ["PHP", "Oracle"],
   },
   {
-    badge: "Mobile",
-    title: "Fitness Tracker App",
+    badge: "Banking",
+    title: "SIKM \u2013 Savings & Loan System",
     description:
-      "Cross-platform mobile app for tracking workouts, setting goals, and monitoring health metrics with charts.",
-    tech: ["React Native", "Expo", "Firebase"],
-    github: "https://github.com",
-    live: "#",
+      "Built a savings and loan management web application for Bank BUKOPIN, supporting core banking operations including account management and transaction processing.",
+    tech: ["VB.NET", "Oracle"],
   },
   {
-    badge: "Backend",
-    title: "REST API Boilerplate",
+    badge: "Web App",
+    title: "Digital Library & ID-Cert",
     description:
-      "Production-ready Node.js API starter with JWT auth, rate limiting, structured logging, and automated tests.",
-    tech: ["Node.js", "Express", "PostgreSQL", "Jest"],
-    github: "https://github.com",
-    live: "#",
+      "Built a digital library web application using Python, Medusa, and Django, along with an ID-Cert website \u2014 full-stack Python projects covering content management and identity certification.",
+    tech: ["Python", "Django", "Medusa"],
   },
 ];
 
 const badgeColors: Record<string, string> = {
-  "Full Stack": "bg-teal-500/10 border-teal-500/20 text-teal-400",
-  Frontend: "bg-blue-500/10 border-blue-500/20 text-blue-400",
-  "Open Source": "bg-purple-500/10 border-purple-500/20 text-purple-400",
-  Mobile: "bg-orange-500/10 border-orange-500/20 text-orange-400",
-  Backend: "bg-green-500/10 border-green-500/20 text-green-400",
+  Government: "bg-teal-500/10 border-teal-500/20 text-teal-400",
+  Migration: "bg-blue-500/10 border-blue-500/20 text-blue-400",
+  Enterprise: "bg-purple-500/10 border-purple-500/20 text-purple-400",
+  Finance: "bg-green-500/10 border-green-500/20 text-green-400",
+  Banking: "bg-orange-500/10 border-orange-500/20 text-orange-400",
+  "Web App": "bg-pink-500/10 border-pink-500/20 text-pink-400",
 };
 
 function Projects() {
@@ -76,8 +65,8 @@ function Projects() {
             Things I've built
           </h2>
           <p className="text-stone-500 dark:text-gray-400 text-center">
-            A selection of projects I'm proud of. Each one solved a real
-            problem and taught me something new.
+            A selection of real-world projects delivered across government, banking, finance,
+            and enterprise sectors over 13+ years.
           </p>
         </div>
 
@@ -88,7 +77,7 @@ function Projects() {
               key={i}
               className="group bg-white dark:bg-black rounded-2xl p-6 border border-stone-200 dark:border-white/10 hover:border-teal-500/30 hover:shadow-xl hover:shadow-teal-500/5 transition-all duration-300 flex flex-col"
             >
-              {/* Top row: badge + links */}
+              {/* Top row: badge only */}
               <div className="flex items-start justify-between mb-5">
                 <span
                   className={`text-xs font-semibold px-3 py-1 rounded-full border ${
@@ -98,24 +87,7 @@ function Projects() {
                 >
                   {project.badge}
                 </span>
-                <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-stone-500 dark:text-gray-500 hover:text-stone-900 dark:hover:text-white transition-colors text-sm"
-                  >
-                    GitHub ↗
-                  </a>
-                  <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-stone-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm"
-                  >
-                    Live ↗
-                  </a>
-                </div>
+                <span className="text-xs text-stone-400 dark:text-gray-600 italic">Enterprise</span>
               </div>
 
               <h3 className="text-lg font-bold text-stone-900 dark:text-white mb-2">
