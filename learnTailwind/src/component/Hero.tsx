@@ -9,10 +9,6 @@ function Hero() {
       <div className="max-w-7xl w-full mx-auto grid md:grid-cols-2 gap-16 items-center">
         {/* Left: Text */}
         <div className="space-y-6">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-400 text-sm font-medium">
-            🚀 Available for work
-          </span>
-
           <h1 className="text-5xl md:text-7xl font-bold text-stone-900 dark:text-white leading-tight">
             Hi, I'm{" "}
             <span className="text-teal-400">Andreas</span>
