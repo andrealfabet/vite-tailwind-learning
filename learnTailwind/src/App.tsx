@@ -6,6 +6,7 @@ import Experience from "./component/Experience";
 import Projects from "./component/Projects";
 import Contact from "./component/Contact";
 import Footer from "./component/Footer";
+import BackToTop from "./component/BackToTop";
 import "./App.css";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Projects />
       <Contact />
       <Footer />
+      <BackToTop />
     </ThemeProvider>
   );
 }
