@@ -2,7 +2,7 @@
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
   font-size: 16px;
   line-height: 1.6;
-  color-scheme: dark;
+  color-scheme: dark light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -13,8 +13,17 @@
   box-sizing: border-box;
 }
 
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 body {
   margin: 0;
+  background-color: #fffbeb;
+  color: #1c1917;
+}
+
+.dark body {
   background-color: #000;
   color: #e5e7eb;
 }

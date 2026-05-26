@@ -2,13 +2,13 @@ function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-950 border-t border-white/10 py-16 px-8 md:px-16">
+    <footer className="bg-orange-50 dark:bg-gray-950 border-t border-stone-200 dark:border-white/10 py-16 px-8 md:px-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-3 gap-12 mb-12">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="text-2xl font-bold text-teal-400">Fajar</div>
-            <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
+            <div className="text-2xl font-bold text-teal-600 dark:text-teal-400">Andreas</div>
+            <p className="text-stone-500 dark:text-gray-500 text-sm leading-relaxed max-w-xs">
               Full Stack Developer building clean, performant, and
               user-friendly web experiences.
             </p>
@@ -22,7 +22,7 @@ function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-gray-500 hover:text-teal-400 text-sm transition-colors"
+                  className="text-stone-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-teal-400 text-sm transition-colors"
                 >
                   {s.label} ↗
                 </a>
@@ -32,13 +32,13 @@ function Footer() {
 
           {/* Navigation */}
           <div>
-            <h4 className="text-white font-semibold mb-5">Navigation</h4>
+            <h4 className="text-stone-900 dark:text-white font-semibold mb-5">Navigation</h4>
             <ul className="space-y-3">
               {["About", "Experience", "Projects", "Contact"].map((link) => (
                 <li key={link}>
                   <a
                     href={`#${link.toLowerCase()}`}
-                    className="text-gray-500 hover:text-teal-400 transition-colors text-sm"
+                    className="text-stone-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm"
                   >
                     {link}
                   </a>
@@ -49,19 +49,19 @@ function Footer() {
 
           {/* Connect */}
           <div>
-            <h4 className="text-white font-semibold mb-5">Connect</h4>
+            <h4 className="text-stone-900 dark:text-white font-semibold mb-5">Connect</h4>
             <ul className="space-y-3">
               {[
-                { label: "GitHub", href: "https://github.com" },
-                { label: "LinkedIn", href: "https://linkedin.com" },
-                { label: "Email", href: "mailto:fajar@email.com" },
+                { label: "GitHub", href: "https://github.com/andreaswenra" },
+                { label: "LinkedIn", href: "https://linkedin.com/in/andreaswenra" },
+                { label: "Email", href: "mailto:andreaswenra@email.com" },
               ].map((item) => (
                 <li key={item.label}>
                   <a
                     href={item.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-gray-500 hover:text-teal-400 transition-colors text-sm"
+                    className="text-stone-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm"
                   >
                     {item.label} ↗
                   </a>
@@ -72,8 +72,8 @@ function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-600">
-          <span>© {year} Fajar. All rights reserved.</span>
+          <div className="border-t border-stone-200 dark:border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-stone-400 dark:text-gray-600">
+          <span>© {year} Andreas. All rights reserved.</span>
           <span>Built with React · TypeScript · Tailwind CSS</span>
         </div>
       </div>

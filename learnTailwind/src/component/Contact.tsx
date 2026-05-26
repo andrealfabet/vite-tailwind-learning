@@ -2,36 +2,36 @@ const contactInfo = [
   {
     icon: "📧",
     label: "Email",
-    value: "fajar@email.com",
-    href: "mailto:fajar@email.com",
+    value: "andreaswenra@email.com",
+    href: "mailto:andreaswenra@email.com",
   },
   {
     icon: "💼",
     label: "LinkedIn",
-    value: "linkedin.com/in/fajar",
-    href: "https://linkedin.com",
+    value: "linkedin.com/in/andreaswenra",
+    href: "https://linkedin.com/in/andreaswenra",
   },
   {
     icon: "🐙",
     label: "GitHub",
-    value: "github.com/fajar",
-    href: "https://github.com",
+    value: "github.com/andreaswenra",
+    href: "https://github.com/andreaswenra",
   },
 ];
 
 function Contact() {
   return (
-    <section id="contact" className="py-24 bg-black px-8 md:px-16">
+    <section id="contact" className="py-24 bg-amber-50 dark:bg-black px-8 md:px-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 space-y-4">
-          <span className="text-teal-400 text-sm font-semibold uppercase tracking-widest">
+          <span className="text-teal-600 dark:text-teal-400 text-sm font-semibold uppercase tracking-widest">
             Contact
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white">
+          <h2 className="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white">
             Let's work together
           </h2>
-          <p className="text-gray-400 max-w-xl mx-auto">
+          <p className="text-stone-500 dark:text-gray-400 max-w-xl mx-auto">
             Have a project in mind or want to chat? I'd love to hear from you.
             Send me a message and I'll get back to you as soon as possible.
           </p>
@@ -46,14 +46,14 @@ function Contact() {
                 href={item.href}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-4 p-5 bg-gray-950 border border-white/10 rounded-2xl hover:border-teal-500/30 hover:shadow-lg hover:shadow-teal-500/5 transition-all duration-300 group"
+                className="flex items-center gap-4 p-5 bg-white dark:bg-gray-950 border border-stone-200 dark:border-white/10 rounded-2xl hover:border-teal-500/30 hover:shadow-lg hover:shadow-teal-500/5 transition-all duration-300 group"
               >
                 <span className="text-2xl">{item.icon}</span>
                 <div>
-                  <div className="text-xs text-gray-500 uppercase tracking-widest mb-0.5">
+                  <div className="text-xs text-stone-400 dark:text-gray-500 uppercase tracking-widest mb-0.5">
                     {item.label}
                   </div>
-                  <div className="text-gray-300 group-hover:text-teal-400 transition-colors">
+                  <div className="text-stone-700 dark:text-gray-300 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
                     {item.value}
                   </div>
                 </div>
@@ -77,23 +77,23 @@ function Contact() {
               <input
                 type="text"
                 placeholder="Your name"
-                className="col-span-2 sm:col-span-1 bg-gray-950 border border-white/10 text-white placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors"
+                className="col-span-2 sm:col-span-1 bg-white dark:bg-gray-950 border border-stone-200 dark:border-white/10 text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors"
               />
               <input
                 type="email"
                 placeholder="Your email"
-                className="col-span-2 sm:col-span-1 bg-gray-950 border border-white/10 text-white placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors"
+                className="col-span-2 sm:col-span-1 bg-white dark:bg-gray-950 border border-stone-200 dark:border-white/10 text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors"
               />
             </div>
             <input
               type="text"
               placeholder="Subject"
-              className="w-full bg-gray-950 border border-white/10 text-white placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors"
+              className="w-full bg-white dark:bg-gray-950 border border-stone-200 dark:border-white/10 text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors"
             />
             <textarea
               rows={5}
               placeholder="Your message..."
-              className="w-full bg-gray-950 border border-white/10 text-white placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors resize-none"
+              className="w-full bg-white dark:bg-gray-950 border border-stone-200 dark:border-white/10 text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors resize-none"
             />
             <button
               type="submit"

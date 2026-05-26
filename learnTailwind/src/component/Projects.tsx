@@ -65,17 +65,17 @@ const badgeColors: Record<string, string> = {
 
 function Projects() {
   return (
-    <section id="projects" className="py-24 bg-gray-950 px-8 md:px-16">
+    <section id="projects" className="py-24 bg-orange-50 dark:bg-gray-950 px-8 md:px-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 space-y-4">
-          <span className="text-teal-400 text-sm font-semibold uppercase tracking-widest">
+          <span className="text-teal-600 dark:text-teal-400 text-sm font-semibold uppercase tracking-widest">
             Projects
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white">
+          <h2 className="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white">
             Things I've built
           </h2>
-          <p className="text-gray-400 max-w-xl mx-auto">
+          <p className="text-stone-500 dark:text-gray-400 max-w-xl mx-auto">
             A selection of projects I'm proud of. Each one solved a real
             problem and taught me something new.
           </p>
@@ -86,7 +86,7 @@ function Projects() {
           {projects.map((project, i) => (
             <div
               key={i}
-              className="group bg-black rounded-2xl p-6 border border-white/10 hover:border-teal-500/30 hover:shadow-xl hover:shadow-teal-500/5 transition-all duration-300 flex flex-col"
+              className="group bg-white dark:bg-black rounded-2xl p-6 border border-stone-200 dark:border-white/10 hover:border-teal-500/30 hover:shadow-xl hover:shadow-teal-500/5 transition-all duration-300 flex flex-col"
             >
               {/* Top row: badge + links */}
               <div className="flex items-start justify-between mb-5">
@@ -103,7 +103,7 @@ function Projects() {
                     href={project.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-gray-500 hover:text-white transition-colors text-sm"
+                    className="text-stone-500 dark:text-gray-500 hover:text-stone-900 dark:hover:text-white transition-colors text-sm"
                   >
                     GitHub ↗
                   </a>
@@ -111,17 +111,17 @@ function Projects() {
                     href={project.live}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-gray-500 hover:text-teal-400 transition-colors text-sm"
+                    className="text-stone-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm"
                   >
                     Live ↗
                   </a>
                 </div>
               </div>
 
-              <h3 className="text-lg font-bold text-white mb-2">
+              <h3 className="text-lg font-bold text-stone-900 dark:text-white mb-2">
                 {project.title}
               </h3>
-              <p className="text-gray-400 text-sm leading-relaxed mb-5 flex-1">
+              <p className="text-stone-500 dark:text-gray-400 text-sm leading-relaxed mb-5 flex-1">
                 {project.description}
               </p>
 
@@ -129,7 +129,7 @@ function Projects() {
                 {project.tech.map((t) => (
                   <span
                     key={t}
-                    className="px-2.5 py-1 bg-white/5 border border-white/10 text-gray-400 rounded-md text-xs"
+                    className="px-2.5 py-1 bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-white/10 text-stone-500 dark:text-gray-400 rounded-md text-xs"
                   >
                     {t}
                   </span>

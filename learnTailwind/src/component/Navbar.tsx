@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -18,11 +19,11 @@ function Navbar() {
   }, []);
 
   const linkClass =
-    "text-gray-400 hover:text-teal-400 transition-colors duration-200 text-sm font-medium";
+    "text-stone-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors duration-200 text-sm font-medium";
 
   return (
     <nav
-      className={`sticky top-0 left-0 w-full bg-black/80 backdrop-blur-md border-b border-white/10 z-50 transition-all duration-300 ${
+      className={`sticky top-0 left-0 w-full bg-amber-50/80 dark:bg-black/80 backdrop-blur-md border-b border-stone-200 dark:border-white/10 z-50 transition-all duration-300 ${
         scrolled ? "py-3" : "py-4"
       }`}
     >
@@ -31,9 +32,9 @@ function Navbar() {
         {/* Logo */}
         <a
           href="#hero"
-          className="text-xl font-bold text-teal-400 tracking-tight hover:text-teal-300 transition-colors"
+          className="text-xl font-bold text-teal-600 dark:text-teal-400 tracking-tight hover:text-teal-500 dark:hover:text-teal-300 transition-colors"
         >
-          Fajar
+          Andreas
         </a>
 
         {/* Desktop Menu */}
@@ -43,6 +44,7 @@ function Navbar() {
               {link.label}
             </a>
           ))}
+          <ThemeToggle />
           <a
             href="#contact"
             className="px-4 py-2 bg-teal-500 hover:bg-teal-400 text-black text-sm font-semibold rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-teal-500/25"
@@ -63,7 +65,7 @@ function Navbar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden px-8 py-6 flex flex-col gap-5 bg-black border-t border-white/10">
+        <div className="md:hidden px-8 py-6 flex flex-col gap-5 bg-amber-50 dark:bg-black border-t border-stone-200 dark:border-white/10">
           {navLinks.map((link) => (
             <a
               key={link.label}
