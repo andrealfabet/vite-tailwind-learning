@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
+import DownloadCvButton from "./DownloadCvButton";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -45,12 +46,7 @@ function Navbar() {
             </a>
           ))}
           <ThemeToggle />
-          <a
-            href="#contact"
-            className="px-4 py-2 bg-teal-500 hover:bg-teal-400 text-black text-sm font-semibold rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-teal-500/25"
-          >
-            Hire Me
-          </a>
+          <DownloadCvButton />
         </div>
 
         {/* Mobile Menu Button */}
@@ -76,6 +72,10 @@ function Navbar() {
               {link.label}
             </a>
           ))}
+          <DownloadCvButton
+            label="↓ Download CV"
+            className="w-fit flex items-center gap-1.5 px-4 py-2 border border-teal-500/40 text-teal-600 dark:text-teal-400 text-sm font-medium rounded-lg hover:bg-teal-500/10 hover:border-teal-500 transition-all duration-200 disabled:opacity-50"
+          />
           <a
             href="#contact"
             className="w-fit px-4 py-2 bg-teal-500 hover:bg-teal-400 text-black text-sm font-semibold rounded-lg transition-all duration-200"

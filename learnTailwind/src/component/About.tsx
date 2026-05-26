@@ -1,41 +1,4 @@
-const skillGroups = [
-  {
-    category: "Languages",
-    badge: "Core",
-    icon: "💻",
-    items: ["C#", "VB.NET", "JavaScript", "PHP", "Python"],
-  },
-  {
-    category: ".NET Stack",
-    badge: "Core",
-    icon: "⚙️",
-    items: [".NET Framework", ".NET Core", "ASP.NET", "DevExpress"],
-  },
-  {
-    category: "Web Frameworks",
-    badge: "Core",
-    icon: "🌐",
-    items: ["Node.js", "Next.js", "Django"],
-  },
-  {
-    category: "CMS Platforms",
-    badge: "Pro",
-    icon: "🖥️",
-    items: ["Sitecore", "Sitefinity", "Directus (VISOR)"],
-  },
-  {
-    category: "Databases",
-    badge: "Core",
-    icon: "🗄️",
-    items: ["Oracle", "SQL Server", "PostgreSQL"],
-  },
-  {
-    category: "Cloud & Tools",
-    badge: "Pro",
-    icon: "☁️",
-    items: ["AWS", "Git", "VS Code"],
-  },
-];
+import { skillGroups } from "../data/cv";
 
 const badgeStyle: Record<string, string> = {
   Core: "bg-teal-500/10 border-teal-500/20 text-teal-400",
