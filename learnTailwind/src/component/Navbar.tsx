@@ -34,7 +34,7 @@ function Navbar() {
           href="#hero"
           className="text-xl font-bold text-teal-600 dark:text-teal-400 tracking-tight hover:text-teal-500 dark:hover:text-teal-300 transition-colors"
         >
-          Andreas
+          Andreas Wenra Alfa
         </a>
 
         {/* Desktop Menu */}
