@@ -1,4 +1,4 @@
-import heroImg from "../assets/hero.png";
+import profileImg from "../assets/Photo.webp";
 
 function Hero() {
   return (
@@ -57,27 +57,12 @@ function Hero() {
         <div className="flex justify-center">
           <div className="relative">
             {/* Profile photo */}
-            <div className="w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden border-2 border-teal-500/30 shadow-2xl shadow-teal-500/10">
+            <div className="w-72 h-72 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-teal-500/40 shadow-2xl shadow-teal-500/20 ring-4 ring-teal-500/10">
               <img
-                src={heroImg}
+                src={profileImg}
                 alt="Fajar"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top"
               />
-            </div>
-
-            {/* Floating tech badge – top right */}
-            <div className="absolute -top-4 -right-6 bg-gray-900 border border-white/10 rounded-xl px-4 py-2 text-sm text-gray-300 shadow-xl backdrop-blur">
-              ⚛️ React
-            </div>
-
-            {/* Floating tech badge – bottom left */}
-            <div className="absolute -bottom-4 -left-6 bg-gray-900 border border-white/10 rounded-xl px-4 py-2 text-sm text-gray-300 shadow-xl backdrop-blur">
-              🔷 TypeScript
-            </div>
-
-            {/* Floating tech badge – middle left */}
-            <div className="absolute top-1/2 -left-10 -translate-y-1/2 bg-gray-900 border border-white/10 rounded-xl px-4 py-2 text-sm text-gray-300 shadow-xl backdrop-blur">
-              🎨 Tailwind
             </div>
           </div>
         </div>
