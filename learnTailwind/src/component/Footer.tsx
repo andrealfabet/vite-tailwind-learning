@@ -20,7 +20,7 @@ function Footer() {
                   key={s.label}
                   href={s.href}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="text-stone-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-teal-400 text-sm transition-colors"
                 >
                   {s.label} ↗
@@ -58,7 +58,7 @@ function Footer() {
                   <a
                     href={item.href}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="text-stone-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm"
                   >
                     {item.label} ↗

@@ -61,7 +61,7 @@ function Contact() {
                 key={item.label}
                 href={item.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="flex items-center gap-4 p-5 bg-white dark:bg-gray-950 border border-stone-200 dark:border-white/10 rounded-2xl hover:border-teal-500/30 hover:shadow-lg hover:shadow-teal-500/5 transition-all duration-300 group"
               >
                 <span className="text-2xl">{item.icon}</span>
@@ -96,6 +96,8 @@ function Contact() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
+                maxLength={100}
+                autoComplete="name"
                 className="col-span-2 sm:col-span-1 bg-white dark:bg-gray-950 border border-stone-200 dark:border-white/10 text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors"
               />
               <input
@@ -104,6 +106,8 @@ function Contact() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                maxLength={254}
+                autoComplete="email"
                 className="col-span-2 sm:col-span-1 bg-white dark:bg-gray-950 border border-stone-200 dark:border-white/10 text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors"
               />
             </div>
@@ -112,6 +116,7 @@ function Contact() {
               placeholder="Subject"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
+              maxLength={150}
               className="w-full bg-white dark:bg-gray-950 border border-stone-200 dark:border-white/10 text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors"
             />
             <textarea
@@ -120,6 +125,7 @@ function Contact() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               required
+              maxLength={2000}
               className="w-full bg-white dark:bg-gray-950 border border-stone-200 dark:border-white/10 text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors resize-none"
             />
             <button
