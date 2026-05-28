@@ -7,7 +7,7 @@ function Footer() {
         <div className="grid md:grid-cols-3 gap-12 mb-12">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="text-2xl font-bold text-teal-600 dark:text-teal-400">Andreas</div>
+            <div className="text-2xl font-bold text-teal-600 dark:text-teal-400">Andreas Wenra Alfa</div>
             <p className="text-stone-500 dark:text-gray-500 text-sm leading-relaxed max-w-xs">
               Software Developer with 13+ years of experience delivering
               enterprise web solutions across government, banking, and finance sectors.

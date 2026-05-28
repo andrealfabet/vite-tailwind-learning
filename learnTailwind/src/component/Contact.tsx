@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const contactInfo = [
   {
     icon: "📧",
@@ -20,6 +22,20 @@ const contactInfo = [
 ];
 
 function Contact() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const to = "andreaswenra@gmail.com";
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+    const sub = encodeURIComponent(subject || "Message from Portfolio");
+    const mailtoLink = `mailto:${to}?subject=${sub}&body=${body}`;
+    globalThis.location.href = mailtoLink;
+  };
+
   return (
     <section id="contact" className="py-24 bg-amber-50 dark:bg-black px-8 md:px-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
@@ -72,27 +88,38 @@ function Contact() {
           </div>
 
           {/* Right: Form */}
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-4">
               <input
                 type="text"
                 placeholder="Your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
                 className="col-span-2 sm:col-span-1 bg-white dark:bg-gray-950 border border-stone-200 dark:border-white/10 text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors"
               />
               <input
                 type="email"
                 placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
                 className="col-span-2 sm:col-span-1 bg-white dark:bg-gray-950 border border-stone-200 dark:border-white/10 text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors"
               />
             </div>
             <input
               type="text"
               placeholder="Subject"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
               className="w-full bg-white dark:bg-gray-950 border border-stone-200 dark:border-white/10 text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors"
             />
             <textarea
               rows={5}
               placeholder="Your message..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              required
               className="w-full bg-white dark:bg-gray-950 border border-stone-200 dark:border-white/10 text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500/50 transition-colors resize-none"
             />
             <button
