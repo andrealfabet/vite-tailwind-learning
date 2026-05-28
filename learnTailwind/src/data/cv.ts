@@ -17,39 +17,33 @@ export const personalInfo = {
 export const skillGroups = [
   {
     category: "Languages",
-    badge: "Core" as const,
     icon: "💻",
     items: ["C#", "VB.NET", "JavaScript", "PHP", "Python"],
   },
   {
     category: ".NET Stack",
-    badge: "Core" as const,
     icon: "⚙️",
     items: [".NET Framework", ".NET Core", "ASP.NET", "DevExpress"],
   },
   {
     category: "Web Frameworks",
-    badge: "Core" as const,
     icon: "🌐",
     items: ["Node.js", "Next.js", "Django"],
   },
   {
     category: "CMS Platforms",
-    badge: "Pro" as const,
     icon: "🖥️",
     items: ["Sitecore", "Sitefinity", "Directus (VISOR)"],
   },
   {
     category: "Databases",
-    badge: "Core" as const,
     icon: "🗄️",
     items: ["Oracle", "SQL Server", "PostgreSQL"],
   },
   {
     category: "Cloud & Tools",
-    badge: "Pro" as const,
     icon: "☁️",
-    items: ["AWS", "Git", "VS Code"],
+    items: ["AWS", "Git", "VS Code", "Visual Studio"],
   },
 ];
 

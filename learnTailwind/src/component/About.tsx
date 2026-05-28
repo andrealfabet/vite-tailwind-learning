@@ -1,10 +1,5 @@
 import { skillGroups } from "../data/cv";
 
-const badgeStyle: Record<string, string> = {
-  Core: "bg-teal-500/10 border-teal-500/20 text-teal-400",
-  Pro: "bg-purple-500/10 border-purple-500/20 text-purple-400",
-};
-
 function About() {
   return (
     <section id="about" className="py-24 bg-orange-50 dark:bg-gray-950 px-8 md:px-16 transition-colors duration-300">
@@ -30,14 +25,9 @@ function About() {
               key={group.category}
               className="bg-white dark:bg-black rounded-2xl p-6 border border-stone-200 dark:border-white/10 hover:border-teal-500/30 hover:shadow-xl hover:shadow-teal-500/5 transition-all duration-300 group"
             >
-              {/* Icon + Badge row */}
-              <div className="flex items-center justify-between mb-4">
+              {/* Icon row */}
+              <div className="mb-4">
                 <span className="text-2xl">{group.icon}</span>
-                <span
-                  className={`text-xs font-semibold px-3 py-1 rounded-full border ${badgeStyle[group.badge]}`}
-                >
-                  {group.badge}
-                </span>
               </div>
 
               <h3 className="text-stone-900 dark:text-white font-bold text-lg mb-3">

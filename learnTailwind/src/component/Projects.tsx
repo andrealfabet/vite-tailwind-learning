@@ -41,6 +41,13 @@ const projects = [
       "Built a digital library web application using Python, Medusa, and Django, along with an ID-Cert website \u2014 full-stack Python projects covering content management and identity certification.",
     tech: ["Python", "Django", "Medusa"],
   },
+  {
+    badge: "Geospatial",
+    title: "GeoFence Check-In \u2013 OpenStreetMap",
+    description:
+      "Built an interactive map application using OpenStreetMap for drawing coordinate-based polygon geofences. Supports anonymous user check-in and check-out validated against geofence boundaries, with session continuity managed via refresh tokens and real-time location captured through the browser Geolocation API.",
+    tech: ["Leaflet.js", "CartoDB", "Geolocation API", "Refresh Token", "GeoJSON"],
+  },
 ];
 
 const badgeColors: Record<string, string> = {
@@ -50,6 +57,7 @@ const badgeColors: Record<string, string> = {
   Finance: "bg-green-500/10 border-green-500/20 text-green-400",
   Banking: "bg-orange-500/10 border-orange-500/20 text-orange-400",
   "Web App": "bg-pink-500/10 border-pink-500/20 text-pink-400",
+  Geospatial: "bg-emerald-500/10 border-emerald-500/20 text-emerald-400",
 };
 
 function Projects() {
@@ -72,9 +80,9 @@ function Projects() {
 
         {/* Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, i) => (
+          {projects.map((project) => (
             <div
-              key={i}
+              key={project.title}
               className="group bg-white dark:bg-black rounded-2xl p-6 border border-stone-200 dark:border-white/10 hover:border-teal-500/30 hover:shadow-xl hover:shadow-teal-500/5 transition-all duration-300 flex flex-col"
             >
               {/* Top row: badge only */}
