@@ -9,6 +9,7 @@ import Contact from "./component/Contact";
 import Footer from "./component/Footer";
 import BackToTop from "./component/BackToTop";
 import Maps from "./pages/Maps";
+import ZonePage from "./pages/Zone";
 import "./App.css";
 
 function Portfolio() {
@@ -32,6 +33,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Portfolio />} />
         <Route path="/maps" element={<Maps />} />
+        <Route path="/zone" element={<ZonePage />} />
       </Routes>
     </BrowserRouter>
   );
