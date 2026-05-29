@@ -111,11 +111,14 @@ function Maps() {
 
   return (
     <div className="relative w-full h-screen bg-black">
-      {/* Back button */}
-      <div className="absolute top-4 left-4 z-[1000]">
+      {/* Push Leaflet zoom control below the Back button */}
+      <style>{`.maps-page .leaflet-top.leaflet-left { top: 52px; }`}</style>
+
+      {/* Back button — above the zoom control */}
+      <div className="absolute top-3 left-3 z-[1000]">
         <Link
           to="/"
-          className="flex items-center gap-2 px-4 py-2 bg-black/70 border border-white/10 text-teal-400 text-sm font-semibold rounded-xl backdrop-blur-md hover:border-teal-500/40 hover:text-teal-300 transition-all duration-200"
+          className="flex items-center gap-2 px-4 py-2 bg-black/70 border border-white/10 text-white/60 text-sm font-semibold rounded-xl backdrop-blur-md hover:text-teal-400! hover:border-teal-500/30 transition-all duration-200"
         >
           ← Back
         </Link>
@@ -157,7 +160,7 @@ function Maps() {
       </div>
 
       {/* Map container */}
-      <div ref={mapContainerRef} className="w-full h-full" />
+      <div ref={mapContainerRef} className="maps-page w-full h-full" />
     </div>
   );
 }

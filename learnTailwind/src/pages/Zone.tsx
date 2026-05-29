@@ -365,16 +365,23 @@ export default function ZonePage() {
   // ── Render ────────────────────────────────────────────────────────────────
   return (
     <div className="relative w-full h-screen bg-black overflow-hidden">
-      {/* Top bar */}
-      <div className="absolute top-4 left-4 z-[1001] flex items-center gap-3">
+      {/* Push Leaflet zoom control below the Back button */}
+      <style>{`.zone-page .leaflet-top.leaflet-left { top: 52px; }`}</style>
+
+      {/* Back button — above the zoom control */}
+      <div className="absolute top-3 left-3 z-[1001]">
         <Link
           to="/"
-          className="flex items-center gap-2 px-4 py-2 bg-black/70 border border-white/10 text-teal-400 text-sm font-semibold rounded-xl backdrop-blur-md hover:border-teal-500/40 hover:text-teal-300 transition-all duration-200"
+          className="flex items-center gap-2 px-4 py-2 bg-black/70 border border-white/10 text-white/60 text-sm font-semibold rounded-xl backdrop-blur-md hover:text-teal-400! hover:border-teal-500/30 transition-all duration-200"
         >
           ← Back
         </Link>
-        <div className="px-4 py-2 bg-black/70 border border-white/10 text-teal-400 text-sm font-semibold rounded-xl backdrop-blur-md">
-          Zone Manager · Draw & Save Polygons
+      </div>
+
+      {/* Page title — centred at the very top */}
+      <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1001]">
+        <div className="px-4 py-2 bg-black/70 border border-white/10 text-teal-400 text-sm font-semibold rounded-xl backdrop-blur-md whitespace-nowrap">
+          Zone Manager · Draw &amp; Save Polygons
         </div>
       </div>
 
@@ -613,7 +620,7 @@ export default function ZonePage() {
         >
           {locationStatus === "loading" ? (
             <>
-              <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+              <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />{" "}
               Locating…
             </>
           ) : (
@@ -623,7 +630,7 @@ export default function ZonePage() {
       </div>
 
       {/* Map container */}
-      <div ref={mapContainerRef} className="w-full h-full" />
+      <div ref={mapContainerRef} className="zone-page w-full h-full" />
     </div>
   );
 }
