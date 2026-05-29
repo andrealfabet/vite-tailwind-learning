@@ -64,8 +64,9 @@ function Maps() {
 
     globalThis.navigator.geolocation.getCurrentPosition(
       (pos) => {
-        const { latitude: lat, longitude: lng, accuracy } = pos.coords;
         const map = mapRef.current;
+        if (!map) return;
+        const { latitude: lat, longitude: lng, accuracy } = pos.coords;
 
         // Remove previous marker
         if (markerRef.current) {
