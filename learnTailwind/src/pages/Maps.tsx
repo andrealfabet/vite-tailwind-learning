@@ -4,11 +4,10 @@ import "leaflet/dist/leaflet.css";
 import { Link } from "react-router-dom";
 
 const TILE_URL =
-  "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png";
+  "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
 const TILE_ATTRIBUTION =
-  '&copy; <a href="https://stadiamaps.com/" target="_blank" rel="noopener noreferrer">Stadia Maps</a> ' +
-  '&copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener noreferrer">OpenMapTiles</a> ' +
-  '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors';
+  '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors ' +
+  '&copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">CARTO</a>';
 
 // Default center: Bandung, Indonesia
 const DEFAULT_CENTER: L.LatLngTuple = [-6.9175, 107.6191];
@@ -47,6 +46,7 @@ function Maps() {
 
     L.tileLayer(TILE_URL, {
       attribution: TILE_ATTRIBUTION,
+      subdomains: ["a", "b", "c", "d"],
       maxZoom: 20,
     }).addTo(map);
 
