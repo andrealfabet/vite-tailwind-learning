@@ -90,13 +90,13 @@ function Maps() {
         markerRef.current = marker;
 
         // Add accuracy circle
-        L.circle([lat, lng], {
-          radius: accuracy,
-          color: "#2dd4bf",
-          fillColor: "#2dd4bf",
-          fillOpacity: 0.08,
-          weight: 1,
-        }).addTo(map);
+        // L.circle([lat, lng], {
+        //   radius: 10,
+        //   color: "#2dd4bf",
+        //   fillColor: "#2dd4bf",
+        //   fillOpacity: 0.08,
+        //   weight: 1,
+        // }).addTo(map);
 
         map.flyTo([lat, lng], 16, { duration: 1.5 });
         setCoords({ lat, lng });
