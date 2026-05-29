@@ -114,7 +114,7 @@ function Maps() {
       <div className="absolute top-4 left-4 z-[1000]">
         <Link
           to="/"
-          className="flex items-center gap-2 px-4 py-2 bg-black/70 hover:bg-black/90 border border-white/10 hover:border-teal-500/40 text-white text-sm font-medium rounded-xl backdrop-blur-md transition-all duration-200"
+          className="flex items-center gap-2 px-4 py-2 bg-black/70 border border-white/10 text-teal-400 text-sm font-semibold rounded-xl backdrop-blur-md hover:border-teal-500/40 hover:text-teal-300 transition-all duration-200"
         >
           ← Back
         </Link>
