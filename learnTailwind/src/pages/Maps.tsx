@@ -26,6 +26,7 @@ const locationIcon = L.divIcon({
 });
 
 type LocationStatus = "idle" | "loading" | "success" | "error";
+type LocationError = "denied" | "unavailable" | "timeout" | null;
 
 const PRESET_COLORS = [
   "#ef4444",
@@ -97,7 +98,31 @@ function Maps() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [locationStatus, setLocationStatus] = useState<LocationStatus>("idle");
+  const [locationError, setLocationError] = useState<LocationError>(null);
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
+
+  // Check geolocation permission state on mount
+  useEffect(() => {
+    if (!globalThis.navigator?.permissions) return;
+    globalThis.navigator.permissions
+      .query({ name: "geolocation" })
+      .then((result) => {
+        if (result.state === "denied") {
+          setLocationError("denied");
+          setLocationStatus("error");
+        }
+        result.onchange = () => {
+          if (result.state === "denied") {
+            setLocationError("denied");
+            setLocationStatus("error");
+          } else if (result.state === "granted" || result.state === "prompt") {
+            setLocationStatus("idle");
+            setLocationError(null);
+          }
+        };
+      })
+      .catch(() => {/* permissions API not supported, ignore */});
+  }, []);
 
   // ── Map init + drawing events ─────────────────────────────────────────────
   useEffect(() => {
@@ -316,6 +341,7 @@ function Maps() {
     const map = mapRef.current;
     if (!map) return;
     setLocationStatus("loading");
+    setLocationError(null);
 
     globalThis.navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -348,8 +374,14 @@ function Maps() {
         setCoords({ lat, lng });
         setLocationStatus("success");
       },
-      () => setLocationStatus("error"),
-      { enableHighAccuracy: true, timeout: 10000 }
+      (err) => {
+        let errorType: LocationError = "unavailable";
+        if (err.code === 1) errorType = "denied";
+        else if (err.code === 3) errorType = "timeout";
+        setLocationError(errorType);
+        setLocationStatus("error");
+      },
+      { enableHighAccuracy: false, timeout: 10000 }
     );
   };
 
@@ -572,8 +604,19 @@ function Maps() {
       {/* Locate Me — bottom-left so it doesn't overlap the sidebar */}
       <div className="absolute bottom-8 left-4 z-[1000] flex flex-col items-start gap-2">
         {locationStatus === "error" && (
-          <div className="px-3 py-1.5 bg-red-900/80 border border-red-500/30 text-red-300 text-xs rounded-lg backdrop-blur-md">
-            Location access denied
+          <div className="px-3 py-2 bg-red-900/80 border border-red-500/30 text-red-300 text-xs rounded-lg backdrop-blur-md max-w-[220px] leading-relaxed">
+            {locationError === "denied" && (
+              <>
+                <div className="font-semibold mb-1">Location access denied</div>
+                <div className="text-red-400">
+                  Safari: <span className="text-red-300">Settings → Websites → Location</span> → allow this site.
+                  <br />
+                  macOS: <span className="text-red-300">System Settings → Privacy → Location Services → Safari</span>.
+                </div>
+              </>
+            )}
+            {locationError === "timeout" && "Location request timed out — try again"}
+            {locationError === "unavailable" && "Location unavailable on this device"}
           </div>
         )}
         {locationStatus === "success" && coords && (
