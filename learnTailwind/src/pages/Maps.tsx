@@ -11,6 +11,7 @@ const TILE_ATTRIBUTION =
 const DEFAULT_CENTER: L.LatLngTuple = [-6.9175, 107.6191];
 const DEFAULT_ZOOM = 13;
 const LS_KEY = "geo_zones_v1";
+const LS_KEY_PINS = "geo_pins_v1";
 
 const locationIcon = L.divIcon({
   className: "",
@@ -66,6 +67,39 @@ function escHtml(str: string): string {
     .replaceAll('"', "&quot;");
 }
 
+interface Pin {
+  id: string;
+  name: string;
+  color: string;
+  lat: number;
+  lng: number;
+}
+
+function loadPins(): Pin[] {
+  try {
+    return JSON.parse(localStorage.getItem(LS_KEY_PINS) ?? "[]");
+  } catch {
+    return [];
+  }
+}
+
+function savePinsToLS(pins: Pin[]): void {
+  localStorage.setItem(LS_KEY_PINS, JSON.stringify(pins));
+}
+
+function createPinIcon(color: string): L.DivIcon {
+  return L.divIcon({
+    className: "",
+    html: `<div style="display:flex;flex-direction:column;align-items:center;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.5))">
+      <div style="width:22px;height:22px;background:${escHtml(color)};border:3px solid #fff;border-radius:50%;"></div>
+      <div style="width:2px;height:10px;background:#fff;"></div>
+    </div>`,
+    iconSize: [22, 32],
+    iconAnchor: [11, 32],
+    popupAnchor: [0, -34],
+  });
+}
+
 function Maps() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
@@ -87,6 +121,14 @@ function Maps() {
     cancelDrawing: () => {},
   });
 
+  const pinsGroupRef = useRef<L.LayerGroup | null>(null);
+  const pinModeRef = useRef(false);
+  const pinClickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pinActionsRef = useRef({
+    togglePinMode: () => {},
+    cancelPinMode: () => {},
+  });
+
   // UI state
   const [zones, setZones] = useState<Zone[]>(loadZones);
   const [drawMode, setDrawMode] = useState(false);
@@ -100,6 +142,14 @@ function Maps() {
   const [locationStatus, setLocationStatus] = useState<LocationStatus>("idle");
   const [locationError, setLocationError] = useState<LocationError>(null);
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
+
+  const [pins, setPins] = useState<Pin[]>(loadPins);
+  const [pinMode, setPinMode] = useState(false);
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [pendingPin, setPendingPin] = useState<{ lat: number; lng: number } | null>(null);
+  const [pinFormName, setPinFormName] = useState("");
+  const [pinFormColor, setPinFormColor] = useState(PRESET_COLORS[0]);
+  const [copiedPinId, setCopiedPinId] = useState<string | null>(null);
 
   // Check geolocation permission state on mount
   useEffect(() => {
@@ -142,8 +192,10 @@ function Maps() {
 
     const zonesGroup = L.layerGroup().addTo(map);
     const drawGroup = L.layerGroup().addTo(map);
+    const pinsGroup = L.layerGroup().addTo(map);
     zonesGroupRef.current = zonesGroup;
     drawGroupRef.current = drawGroup;
+    pinsGroupRef.current = pinsGroup;
     mapRef.current = map;
 
     const addPoint = (latlng: L.LatLng) => {
@@ -184,6 +236,17 @@ function Maps() {
       map.doubleClickZoom.enable();
     };
 
+    const cancelPinMode = () => {
+      if (pinClickTimerRef.current) {
+        clearTimeout(pinClickTimerRef.current);
+        pinClickTimerRef.current = null;
+      }
+      pinModeRef.current = false;
+      setPinMode(false);
+      map.getContainer().style.cursor = "";
+      map.doubleClickZoom.enable();
+    };
+
     const finishDrawing = () => {
       if (drawingPtsRef.current.length < 3) return;
       setPendingCoords([...drawingPtsRef.current]);
@@ -203,6 +266,7 @@ function Maps() {
       if (drawModeRef.current) {
         cancelDrawing();
       } else {
+        cancelPinMode();
         drawModeRef.current = true;
         setDrawMode(true);
         map.getContainer().style.cursor = "crosshair";
@@ -212,7 +276,38 @@ function Maps() {
 
     actionsRef.current = { toggleDrawMode, finishDrawing, cancelDrawing };
 
+    const togglePinMode = () => {
+      if (pinModeRef.current) {
+        cancelPinMode();
+      } else {
+        cancelDrawing();
+        pinModeRef.current = true;
+        setPinMode(true);
+        map.getContainer().style.cursor = "crosshair";
+        map.doubleClickZoom.disable();
+      }
+    };
+
+    pinActionsRef.current = { togglePinMode, cancelPinMode };
+
     const handleClick = (e: L.LeafletMouseEvent) => {
+      if (pinModeRef.current) {
+        const lat = e.latlng.lat;
+        const lng = e.latlng.lng;
+        if (pinClickTimerRef.current) clearTimeout(pinClickTimerRef.current);
+        pinClickTimerRef.current = setTimeout(() => {
+          pinClickTimerRef.current = null;
+          pinModeRef.current = false;
+          setPinMode(false);
+          map.getContainer().style.cursor = "";
+          map.doubleClickZoom.enable();
+          setPendingPin({ lat, lng });
+          setPinFormName("");
+          setPinFormColor(PRESET_COLORS[0]);
+          setShowPinModal(true);
+        }, 250);
+        return;
+      }
       if (!drawModeRef.current) return;
       pendingClickRef.current = e.latlng;
       if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
@@ -226,6 +321,13 @@ function Maps() {
     };
 
     const handleDblClick = () => {
+      if (pinModeRef.current) {
+        if (pinClickTimerRef.current) {
+          clearTimeout(pinClickTimerRef.current);
+          pinClickTimerRef.current = null;
+        }
+        return;
+      }
       if (!drawModeRef.current) return;
       if (clickTimerRef.current) {
         clearTimeout(clickTimerRef.current);
@@ -261,14 +363,16 @@ function Maps() {
       mapRef.current = null;
       zonesGroupRef.current = null;
       drawGroupRef.current = null;
+      pinsGroupRef.current = null;
     };
   }, []);
 
   // ── Escape cancels drawing ────────────────────────────────────────────────
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && drawModeRef.current) {
-        actionsRef.current.cancelDrawing();
+      if (e.key === "Escape") {
+        if (drawModeRef.current) actionsRef.current.cancelDrawing();
+        else if (pinModeRef.current) pinActionsRef.current.cancelPinMode();
       }
     };
     globalThis.addEventListener("keydown", onKeyDown);
@@ -296,6 +400,23 @@ function Maps() {
         .addTo(group);
     });
   }, [zones]);
+
+  // ── Re-render saved pins ──────────────────────────────────────────────────
+  useEffect(() => {
+    const group = pinsGroupRef.current;
+    if (!group) return;
+    group.clearLayers();
+    pins.forEach((pin) => {
+      L.marker([pin.lat, pin.lng], { icon: createPinIcon(pin.color) })
+        .bindPopup(
+          `<div style="color:#111;font-size:12px;line-height:1.6">
+            <strong>${escHtml(pin.name)}</strong><br/>
+            <span style="color:#666">${pin.lat.toFixed(5)}, ${pin.lng.toFixed(5)}</span>
+          </div>`
+        )
+        .addTo(group);
+    });
+  }, [pins]);
 
   // ── Handlers ──────────────────────────────────────────────────────────────
   const handleSaveZone = () => {
@@ -328,6 +449,41 @@ function Maps() {
       setCopiedId(zone.id);
       setTimeout(() => setCopiedId(null), 1500);
     });
+  };
+
+  const handleSavePin = () => {
+    if (!pinFormName.trim() || !pendingPin) return;
+    const newPin: Pin = {
+      id: Date.now().toString(),
+      name: pinFormName.trim(),
+      color: pinFormColor,
+      lat: pendingPin.lat,
+      lng: pendingPin.lng,
+    };
+    const updated = [...pins, newPin];
+    setPins(updated);
+    savePinsToLS(updated);
+    setShowPinModal(false);
+    setPendingPin(null);
+  };
+
+  const handleDeletePin = (id: string) => {
+    const updated = pins.filter((p) => p.id !== id);
+    setPins(updated);
+    savePinsToLS(updated);
+  };
+
+  const handleZoomToPin = (pin: Pin) => {
+    mapRef.current?.setView([pin.lat, pin.lng], 17, { animate: true });
+  };
+
+  const handleCopyPinCoords = (pin: Pin) => {
+    navigator.clipboard
+      .writeText(JSON.stringify({ lat: pin.lat, lng: pin.lng }, null, 2))
+      .then(() => {
+        setCopiedPinId(pin.id);
+        setTimeout(() => setCopiedPinId(null), 1500);
+      });
   };
 
   const drawingStatusText = (count: number): string => {
@@ -514,7 +670,90 @@ function Maps() {
               ))}
             </div>
           )}
-        </aside>
+          <div className="border-t border-white/5" />
+
+          <div className="flex items-center gap-2">
+            <span className="text-white font-bold text-sm">Pins</span>
+            <span className="px-1.5 py-0.5 bg-purple-500/20 text-purple-400 text-xs rounded-full font-mono">
+              {pins.length}
+            </span>
+          </div>
+
+          {pinMode ? (
+            <div className="flex flex-col gap-2">
+              <div className="px-3 py-2.5 bg-purple-500/10 border border-purple-500/30 rounded-xl">
+                <p className="text-purple-400 text-xs font-bold mb-0.5 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse inline-block" />{" "}
+                  Pin Mode Active
+                </p>
+                <p className="text-purple-300/70 text-xs leading-relaxed">
+                  Click on the map to place a pin
+                </p>
+                <p className="text-white/25 text-xs mt-1.5">Esc to cancel</p>
+              </div>
+              <button
+                onClick={() => pinActionsRef.current.cancelPinMode()}
+                className="w-full py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white/50 text-sm font-semibold rounded-xl transition-all duration-200"
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => pinActionsRef.current.togglePinMode()}
+              className="w-full py-2.5 bg-purple-500 hover:bg-purple-400 text-white text-sm font-bold rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/20 active:scale-95"
+            >
+              📍 Place New Pin
+            </button>
+          )}
+
+          {pins.length === 0 ? (
+            <div className="text-white/20 text-xs text-center py-4 leading-relaxed">
+              No pins saved yet.<br />Click "Place New Pin" to add one.
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {pins.map((pin) => (
+                <div
+                  key={pin.id}
+                  className="group flex flex-col gap-1.5 p-2.5 bg-white/[0.04] border border-white/10 rounded-xl hover:bg-white/[0.07] transition-all duration-150"
+                >
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="w-3.5 h-3.5 rounded-full flex-shrink-0 ring-1 ring-white/20"
+                      style={{ background: pin.color }}
+                    />
+                    <button
+                      onClick={() => handleZoomToPin(pin)}
+                      className="flex-1 text-left text-white/80 text-xs font-semibold hover:text-white transition-colors truncate"
+                      title="Click to zoom to pin"
+                    >
+                      {pin.name}
+                    </button>
+                    <button
+                      onClick={() => handleDeletePin(pin.id)}
+                      className="opacity-0 group-hover:opacity-100 text-white/30 hover:text-red-400 text-xs px-0.5 transition-all duration-150 flex-shrink-0"
+                      title="Delete pin"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div className="flex items-center gap-3 pl-5">
+                    <span className="text-white/25 text-xs font-mono">
+                      {pin.lat.toFixed(4)}, {pin.lng.toFixed(4)}
+                    </span>
+                    <button
+                      onClick={() => handleCopyPinCoords(pin)}
+                      className="text-white/25 hover:text-purple-400 text-xs transition-colors"
+                      title="Copy coordinates as JSON"
+                    >
+                      {copiedPinId === pin.id ? "✓ Copied!" : "⍘ Copy"}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}        </aside>
       )}
 
       {/* Save modal */}
@@ -595,6 +834,85 @@ function Maps() {
                 className="flex-1 py-2.5 bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black text-sm font-bold rounded-xl transition-all duration-200 active:scale-95"
               >
                 Save Zone
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Pin save modal */}
+      {showPinModal && pendingPin && (
+        <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="bg-[#0f1117] border border-white/10 rounded-2xl p-6 w-[22rem] shadow-2xl">
+            <h3 className="text-white font-bold text-base mb-0.5">Save Pin</h3>
+            <p className="text-white/30 text-xs mb-5 font-mono">
+              {pendingPin.lat.toFixed(5)}, {pendingPin.lng.toFixed(5)}
+            </p>
+
+            <label
+              htmlFor="pin-name"
+              className="block text-white/40 text-[10px] font-bold uppercase tracking-widest mb-1.5"
+            >
+              Pin Name
+            </label>
+            <input
+              id="pin-name"
+              type="text"
+              value={pinFormName}
+              onChange={(e) => setPinFormName(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSavePin()}
+              placeholder="e.g. Meeting point, Office, Home…"
+              maxLength={50}
+              className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder-white/20 focus:outline-none focus:border-purple-500/60 focus:bg-white/[0.07] mb-5 transition-colors"
+              autoFocus
+            />
+
+            <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest mb-2">
+              Pin Color
+            </p>
+            <div className="flex flex-wrap gap-2 mb-3">
+              {PRESET_COLORS.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setPinFormColor(c)}
+                  className="w-8 h-8 rounded-full border-2 transition-all duration-150 active:scale-90"
+                  style={{
+                    background: c,
+                    borderColor: pinFormColor === c ? "#fff" : "transparent",
+                    transform: pinFormColor === c ? "scale(1.18)" : "scale(1)",
+                    boxShadow: pinFormColor === c ? `0 0 0 3px ${c}55` : "none",
+                  }}
+                />
+              ))}
+            </div>
+
+            <div className="flex items-center gap-3 mb-5">
+              <input
+                type="color"
+                value={pinFormColor}
+                onChange={(e) => setPinFormColor(e.target.value)}
+                className="w-8 h-8 rounded cursor-pointer border-0 bg-transparent p-0"
+                title="Pick a custom color"
+              />
+              <span className="text-white/30 text-xs">Custom color</span>
+              <span className="ml-auto text-white/50 text-xs font-mono">
+                {pinFormColor.toUpperCase()}
+              </span>
+            </div>
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => { setShowPinModal(false); setPendingPin(null); }}
+                className="flex-1 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-white/50 text-sm font-semibold rounded-xl transition-all duration-200"
+              >
+                Discard
+              </button>
+              <button
+                onClick={handleSavePin}
+                disabled={!pinFormName.trim()}
+                className="flex-1 py-2.5 bg-purple-500 hover:bg-purple-400 disabled:opacity-30 disabled:cursor-not-allowed text-white text-sm font-bold rounded-xl transition-all duration-200 active:scale-95"
+              >
+                Save Pin
               </button>
             </div>
           </div>
