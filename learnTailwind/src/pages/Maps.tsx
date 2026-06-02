@@ -385,19 +385,48 @@ function Maps() {
     if (!group) return;
     group.clearLayers();
     zones.forEach((zone) => {
-      L.polygon(zone.coordinates, {
+      const popupHtml = `<div style="color:#111;font-size:12px;line-height:1.6">
+            <strong>${escHtml(zone.name)}</strong><br/>
+            <span style="color:#666">${zone.coordinates.length} vertices</span>
+          </div>`;
+
+      const poly = L.polygon(zone.coordinates, {
         color: zone.color,
         fillColor: zone.color,
         fillOpacity: 0.2,
         weight: 2,
-      })
-        .bindPopup(
-          `<div style="color:#111;font-size:12px;line-height:1.6">
-            <strong>${escHtml(zone.name)}</strong><br/>
-            <span style="color:#666">${zone.coordinates.length} vertices</span>
-          </div>`
-        )
-        .addTo(group);
+        bubblingMouseEvents: false, // handle all modes explicitly
+      });
+
+      poly.on("click", (e) => {
+        if (pinModeRef.current) {
+          // place a pin at this location
+          const lat = e.latlng.lat;
+          const lng = e.latlng.lng;
+          if (pinClickTimerRef.current) clearTimeout(pinClickTimerRef.current);
+          pinClickTimerRef.current = setTimeout(() => {
+            pinClickTimerRef.current = null;
+            pinModeRef.current = false;
+            setPinMode(false);
+            if (mapRef.current) {
+              mapRef.current.getContainer().style.cursor = "";
+              mapRef.current.doubleClickZoom.enable();
+            }
+            setPendingPin({ lat, lng });
+            setPinFormName("");
+            setPinFormColor(PRESET_COLORS[0]);
+            setShowPinModal(true);
+          }, 250);
+        } else if (drawModeRef.current) {
+          // forward to map so the draw handler adds a vertex
+          mapRef.current?.fire("click", { latlng: e.latlng, originalEvent: e.originalEvent });
+        } else {
+          // normal mode: show popup
+          mapRef.current?.openPopup(popupHtml, e.latlng);
+        }
+      });
+
+      poly.addTo(group);
     });
   }, [zones]);
 
